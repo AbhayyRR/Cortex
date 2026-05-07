@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CortexFlow - Diagnostic</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #0a0a0a;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .diagnostic {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid #3b82f6;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test {
+            background: #1a1a2e;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        .success { border-left-color: #10b981; }
+        .error { border-left-color: #ef4444; }
+        .warning { border-left-color: #f59e0b; }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #2563eb; }
+        #output { 
+            background: #000; 
+            color: #0f0; 
+            padding: 10px; 
+            border-radius: 5px; 
+            font-family: monospace; 
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="diagnostic">
+        <h1>🔧 CortexFlow Diagnostic Tool</h1>
+        <p>This page helps identify why the React app isn't loading properly.</p>
+        
+        <div class="test success">
+            <h3>✅ HTML Loading Test</h3>
+            <p>If you can read this, HTML and CSS are working correctly.</p>
+        </div>
+        
+        <div class="test">
+            <h3>🌐 Browser Information</h3>
+            <p><strong>Browser:</strong> <span id="browser"></span></p>
+            <p><strong>User Agent:</strong> <span id="userAgent"></span></p>
+            <p><strong>Screen Resolution:</strong> <span id="resolution"></span></p>
+        </div>
+        
+        <div class="test">
+            <h3>🔗 Network Test</h3>
+            <p><strong>Current URL:</strong> <span id="currentUrl"></span></p>
+            <p><strong>Protocol:</strong> <span id="protocol"></span></p>
+            <p><strong>Host:</strong> <span id="host"></span></p>
+            <button onclick="testNetwork()">Test Network Connection</button>
+            <p id="networkResult"></p>
+        </div>
+        
+        <div class="test">
+            <h3>⚛️ React Test</h3>
+            <button onclick="testReact()">Test React Loading</button>
+            <p id="reactResult"></p>
+        </div>
+        
+        <div class="test">
+            <h3>📝 Console Output</h3>
+            <div id="output">Console messages will appear here...</div>
+        </div>
+        
+        <div class="test">
+            <h3>🚀 Quick Actions</h3>
+            <button onclick="location.reload()">Hard Refresh Page</button>
+            <button onclick="clearCache()">Clear Browser Cache</button>
+            <button onclick="openDevTools()">Open Developer Tools</button>
+        </div>
+    </div>
+    
+    <script>
+        // Diagnostic functions
+        function log(message, type = 'info') {
+            const output = document.getElementById('output');
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'error' : type === 'warning' ? 'warning' : 'success';
+            
+            output.innerHTML += `<div class="test ${className}">[${timestamp}] ${message}</div>`;
+            output.scrollTop = output.scrollHeight;
+            console.log(`[${timestamp}] ${message}`);
+        }
+        
+        // Browser information
+        document.getElementById('browser').textContent = navigator.appName || 'Unknown';
+        document.getElementById('userAgent').textContent = navigator.userAgent.substring(0, 100) + '...';
+        document.getElementById('resolution').textContent = `${screen.width}x${screen.height}`;
+        document.getElementById('currentUrl').textContent = window.location.href;
+        document.getElementById('protocol').textContent = window.location.protocol;
+        document.getElementById('host').textContent = window.location.host;
+        
+        // Network test
+        function testNetwork() {
+            fetch('/src/main.jsx')
+                .then(response => {
+                    document.getElementById('networkResult').innerHTML = 
+                        `<span style="color: #10b981;">✅ Network OK (${response.status})</span>`;
+                    log('Network test successful');
+                })
+                .catch(error => {
+                    document.getElementById('networkResult').innerHTML = 
+                        `<span style="color: #ef4444;">❌ Network Error: ${error.message}</span>`;
+                    log('Network test failed: ' + error.message, 'error');
+                });
+        }
+        
+        // React test
+        function testReact() {
+            const script = document.createElement('script');
+            script.type = 'module';
+            script.textContent = `
+                import React from '/node_modules/react/index.js';
+                document.getElementById('reactResult').innerHTML = 
+                    '<span style="color: #10b981;">✅ React loaded successfully</span>';
+                console.log('React test successful');
+            `;
+            script.onerror = () => {
+                document.getElementById('reactResult').innerHTML = 
+                    '<span style="color: #ef4444;">❌ React failed to load</span>';
+                log('React test failed', 'error');
+            };
+            document.head.appendChild(script);
+        }
+        
+        // Utility functions
+        function clearCache() {
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => caches.delete(name));
+                });
+            }
+            location.reload(true);
+        }
+        
+        function openDevTools() {
+            if (typeof console !== 'undefined' && console.firebug) {
+                alert('Firebug is running');
+            } else {
+                alert('Press F12 or Ctrl+Shift+I to open Developer Tools');
+            }
+        }
+        
+        // Initial log
+        log('Diagnostic page loaded successfully');
+        log('If you see this, the basic setup is working');
+        log('Check the tests above to identify the specific issue');
+    </script>
+</body>
+</html>

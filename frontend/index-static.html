@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CortexFlow - Static Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 25%, #0f172a 50%, #1e293b 75%, #0f172a 100%);
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(20px);
+            max-width: 600px;
+            margin: 20px;
+        }
+        
+        .title {
+            font-size: 48px;
+            color: #3b82f6;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .subtitle {
+            font-size: 20px;
+            color: #e5e5e5;
+            margin-bottom: 30px;
+        }
+        
+        .test-box {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            font-size: 18px;
+            margin-top: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .status {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+            color: #10b981;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">🚀 CortexFlow</h1>
+        <p class="subtitle">Static HTML Test - No React</p>
+        <div class="test-box">
+            If you can see this page with the dark theme and blue gradient, 
+            then the basic setup is working correctly.
+        </div>
+        <div class="status">
+            ✅ Static HTML loaded successfully<br>
+            📍 Server: http://localhost:3000<br>
+            🕐 Time: <span id="time"></span>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleString();
+        console.log('🚀 Static HTML page loaded successfully');
+        console.log('🔧 React issue confirmed if this page works');
+    </script>
+</body>
+</html>
