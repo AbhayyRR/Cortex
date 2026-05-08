@@ -7,5 +7,5 @@ faiss-cpu
 sqlmodel
 slowapi
 python-dotenv
-openai
+groq
 pdfplumber

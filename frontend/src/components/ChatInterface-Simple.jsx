@@ -32,8 +32,8 @@ export default function ChatInterface({ showToast }) {
     setInput('');
     
     try {
-      // Mock API call
-      const response = await api.sendMessage(input);
+      // Mock response for now - replace with actual API call when backend is ready
+      const response = { message: `I received your message: "${input}". How can I help you today?` };
       
       // Add AI response
       const aiMessage = {

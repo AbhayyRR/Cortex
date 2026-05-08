@@ -1,19 +1,28 @@
 from app.rag import retrieve
-import openai
+from groq import Groq
 import os
+import json
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def tool_retrieve(input_text):
-    return "\n".join(retrieve(input_text))
+    results = retrieve(input_text)
+    formatted_results = []
+    for result in results:
+        formatted_results.append({
+            'text': result['text'],
+            'source': result['source'],
+            'confidence': result['confidence']
+        })
+    return json.dumps(formatted_results)
 
 def tool_summarize(input_text):
-    resp = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+    resp = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
         temperature=0,
         messages=[
             {"role": "system", "content": "Summarize clearly."},
             {"role": "user", "content": input_text}
         ]
     )
-    return resp["choices"][0]["message"]["content"]
+    return resp.choices[0].message.content

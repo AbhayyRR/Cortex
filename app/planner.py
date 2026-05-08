@@ -1,13 +1,12 @@
 import json
 import os
-from openai import OpenAI
+from groq import Groq
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 ALLOWED_TOOLS = {
     "retrieve": "Fetches relevant text chunks from uploaded documents.",
-    "summarize": "Summarizes or extracts structured information.",
-    "general": "Handles reasoning, rewriting, and extraction tasks."
+    "summarize": "Summarizes or extracts structured information."
 }
 
 SYSTEM_PROMPT = f"""
@@ -18,20 +17,34 @@ You are ONLY allowed to use these tools:
 
 Rules:
 1. Use ONLY the allowed tool names.
-2. Each step must be JSON: {{"tool": "...", "input": "..."}}.
-3. Output must be strictly: {{"steps": [ ... ]}}
-4. No explanations. No extra keys. No comments.
-5. Tool inputs must be short and concrete, not generic instructions.
+2. Each step must have a "tool" and an "input".
+3. Keep inputs short and specific.
+4. Start with retrieve for document queries.
+5. Use summarize to condense information.
+6. Consider conversation context for follow-up questions.
+
+Example:
+User: "What is Python?"
+{{"steps": [{{"tool": "retrieve", "input": "Python definition"}}, {{"tool": "summarize", "input": "retrieved text"}}]}}
+
+For follow-up questions, reference the previous context.
 """
 
-def plan_task(task_text):
+def plan_task(task_text, conversation_context=None):
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT}
+    ]
+    
+    if conversation_context:
+        context_str = "\n".join([f"{msg['role']}: {msg['content']}" for msg in conversation_context[-5:]])
+        messages.append({"role": "user", "content": f"Previous conversation:\n{context_str}\n\nCurrent task: {task_text}"})
+    else:
+        messages.append({"role": "user", "content": task_text})
+    
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="llama-3.3-70b-versatile",
         temperature=0,
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": task_text}
-        ]
+        messages=messages
     )
 
     content = response.choices[0].message.content.strip()
