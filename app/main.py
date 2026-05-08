@@ -20,7 +20,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=["http://localhost:5173", "http://localhost:5174", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -39,14 +39,18 @@ def startup():
     os.makedirs("uploads", exist_ok=True)
     
     # Reload all PDFs and rebuild index
-    from app.rag import load_pdf_to_chunks, build_faiss_index
-    import glob
-    
-    pdf_files = glob.glob("uploads/*.pdf")
-    if pdf_files:
-        for pdf_file in pdf_files:
-            load_pdf_to_chunks(pdf_file)
-        build_faiss_index()
+    try:
+        from app.rag import load_pdf_to_chunks, build_faiss_index
+        import glob
+        
+        pdf_files = glob.glob("uploads/*.pdf")
+        if pdf_files:
+            for pdf_file in pdf_files:
+                load_pdf_to_chunks(pdf_file)
+            build_faiss_index()
+    except Exception as e:
+        print(f"Warning: Could not load PDFs during startup: {e}")
+
 
 @app.post("/upload")
 @limiter.limit("5/minute")
