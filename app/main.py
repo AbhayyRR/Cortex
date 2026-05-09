@@ -14,7 +14,10 @@ from slowapi.errors import RateLimitExceeded
 from fastapi.responses import PlainTextResponse
 from fastapi import Request
 from sqlmodel import select
+from groq import Groq
 import os
+
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 app = FastAPI()
 
@@ -97,17 +100,10 @@ def get_result(task_id: int):
 @app.post("/summarize")
 async def summarize_document(request: Request):
     from app.rag import documents
-    from groq import Groq
-    import os
-    
-    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-    
     if not documents:
-        return {"error": "No documents uploaded"}
+        return {"summary": "No documents loaded"}
     
-    # Summarize all documents
-    all_text = "\n\n".join(documents[:10])  # Limit to first 10 chunks to avoid token limits
-    
+    all_text = "\n\n".join(documents[:10])
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         temperature=0,
@@ -116,5 +112,10 @@ async def summarize_document(request: Request):
             {"role": "user", "content": all_text}
         ]
     )
-    
     return {"summary": response.choices[0].message.content}
+
+@app.post("/rebuild-index")
+async def rebuild_index():
+    from app.rag import build_faiss_index
+    build_faiss_index()
+    return {"status": "index rebuilt"}

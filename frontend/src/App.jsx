@@ -41,11 +41,17 @@ export default function App() {
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    document.body.style.backgroundColor = '#0a0a0f';
+    document.body.style.backgroundColor = '#0F172A';
     document.body.style.color = '#f8fafc';
     document.body.style.margin = '0';
     document.body.style.padding = '0';
-    document.body.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif';
+    document.body.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", sans-serif';
+    document.body.style.background = `
+      radial-gradient(ellipse at top, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom left, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+      #0F172A
+    `;
   }, []);
 
   const scrollToBottom = () => {
@@ -229,34 +235,41 @@ export default function App() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 25%, #0f172a 50%, #1e293b 75%, #0f172a 100%)',
+      background: `
+        radial-gradient(ellipse at top, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom left, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+        #0F172A
+      `,
       color: '#f8fafc',
       display: 'flex',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      position: 'relative'
     }}>
       {/* Sidebar */}
       <motion.aside
-        initial={{ x: -320 }}
-        animate={{ x: sidebarOpen ? 0 : -320 }}
+        initial={{ x: -280 }}
+        animate={{ x: sidebarOpen ? 0 : -280 }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         style={{
-          width: '320px',
-          background: 'rgba(15, 23, 42, 0.8)',
-          backdropFilter: 'blur(20px)',
-          borderRight: '1px solid rgba(59, 130, 246, 0.1)',
+          width: '280px',
+          background: 'rgba(17, 24, 39, 0.6)',
+          backdropFilter: 'blur(24px)',
+          borderRight: '1px solid rgba(99, 102, 241, 0.1)',
           display: 'flex',
           flexDirection: 'column',
           position: 'fixed',
           left: 0,
           top: 0,
           bottom: 0,
-          zIndex: 100
+          zIndex: 100,
+          boxShadow: '4px 0 24px rgba(0, 0, 0, 0.3)'
         }}
       >
         {/* Logo Section */}
         <div style={{
-          padding: '24px',
-          borderBottom: '1px solid rgba(59, 130, 246, 0.1)'
+          padding: '20px',
+          borderBottom: '1px solid rgba(99, 102, 241, 0.08)'
         }}>
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -265,80 +278,73 @@ export default function App() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '16px'
+              gap: '12px'
             }}
           >
             <motion.div
               whileHover={{ scale: 1.05, rotate: 5 }}
               style={{
-                width: '48px',
-                height: '48px',
-                background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-                borderRadius: '16px',
+                width: '40px',
+                height: '40px',
+                background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
+                borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)'
+                boxShadow: '0 0 24px rgba(99, 102, 241, 0.4)'
               }}
             >
-              <Bot style={{ width: '28px', height: '28px', color: 'white' }} />
+              <Bot style={{ width: '22px', height: '22px', color: 'white' }} />
             </motion.div>
             <div>
               <h1 style={{
-                fontSize: '22px',
-                fontWeight: 'bold',
-                background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+                fontSize: '18px',
+                fontWeight: '700',
+                background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
-                margin: 0
+                margin: 0,
+                letterSpacing: '-0.02em'
               }}>
                 CortexFlow
               </h1>
-              <p style={{ fontSize: '13px', color: '#94a3b8', margin: '4px 0 0 0' }}>
-                AI Assistant
+              <p style={{ fontSize: '12px', color: '#64748b', margin: '2px 0 0 0', fontWeight: '500' }}>
+                AI Workspace
               </p>
             </div>
           </motion.div>
         </div>
 
         {/* Navigation */}
-        <div style={{ padding: '16px', flex: 1 }}>
-          <h3 style={{
-            fontSize: '11px',
-            fontWeight: '600',
-            color: '#6b7280',
-            textTransform: 'uppercase',
-            marginBottom: '12px',
-            letterSpacing: '0.05em'
-          }}>
-            Navigation
-          </h3>
+        <div style={{ padding: '12px', flex: 1 }}>
           
           <motion.button
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.02, x: 4 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setActiveView('chat')}
             style={{
               width: '100%',
-              padding: '14px 16px',
-              borderRadius: '12px',
+              padding: '12px 14px',
+              borderRadius: '10px',
               border: 'none',
               background: activeView === 'chat' 
-                ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%)' 
+                ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%)' 
                 : 'transparent',
-              color: activeView === 'chat' ? '#f8fafc' : '#94a3b8',
+              color: activeView === 'chat' ? '#f8fafc' : '#64748b',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
-              marginBottom: '8px',
-              border: activeView === 'chat' ? '1px solid rgba(59, 130, 246, 0.3)' : '1px solid transparent',
-              transition: 'all 0.2s ease'
+              gap: '10px',
+              marginBottom: '6px',
+              border: activeView === 'chat' ? '1px solid rgba(99, 102, 241, 0.3)' : '1px solid transparent',
+              transition: 'all 0.2s ease',
+              fontSize: '14px',
+              fontWeight: '500'
             }}
           >
-            <MessageSquare style={{ width: '20px', height: '20px' }} />
-            <span style={{ fontWeight: '500' }}>AI Chat</span>
+            <MessageSquare style={{ width: '18px', height: '18px' }} />
+            <span>AI Chat</span>
             {activeView === 'chat' && (
               <motion.div
                 layout
@@ -355,36 +361,38 @@ export default function App() {
           </motion.button>
           
           <motion.button
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.02, x: 4 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setActiveView('upload')}
             style={{
               width: '100%',
-              padding: '14px 16px',
-              borderRadius: '12px',
+              padding: '12px 14px',
+              borderRadius: '10px',
               border: 'none',
               background: activeView === 'upload' 
-                ? 'linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%)' 
+                ? 'linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%)' 
                 : 'transparent',
-              color: activeView === 'upload' ? '#f8fafc' : '#94a3b8',
+              color: activeView === 'upload' ? '#f8fafc' : '#64748b',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
-              marginBottom: '8px',
+              gap: '10px',
+              marginBottom: '6px',
               border: activeView === 'upload' ? '1px solid rgba(6, 182, 212, 0.3)' : '1px solid transparent',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              fontSize: '14px',
+              fontWeight: '500'
             }}
           >
-            <Upload style={{ width: '20px', height: '20px' }} />
-            <span style={{ fontWeight: '500' }}>Upload</span>
+            <Upload style={{ width: '18px', height: '18px' }} />
+            <span>Upload</span>
             {activeView === 'upload' && (
               <motion.div
                 layout
                 style={{
                   width: '8px',
                   height: '8px',
-                  background: '#06b6d4',
+                  background: '#06B6D4',
                   borderRadius: '50%',
                   marginLeft: 'auto',
                   boxShadow: '0 0 10px rgba(6, 182, 212, 0.5)'
@@ -394,53 +402,53 @@ export default function App() {
           </motion.button>
 
           {/* Recent Conversations */}
-          <h3 style={{
-            fontSize: '11px',
-            fontWeight: '600',
-            color: '#6b7280',
-            textTransform: 'uppercase',
-            marginTop: '24px',
-            marginBottom: '12px',
-            letterSpacing: '0.05em'
-          }}>
-            Recent
-          </h3>
-          
-          {messages.length === 0 ? (
-            <div style={{
-              padding: '20px',
-              background: 'rgba(59, 130, 246, 0.05)',
-              borderRadius: '12px',
-              textAlign: 'center',
-              border: '1px dashed rgba(59, 130, 246, 0.2)'
+          <div style={{ marginTop: '24px' }}>
+            <h3 style={{
+              fontSize: '11px',
+              fontWeight: '600',
+              color: '#64748b',
+              textTransform: 'uppercase',
+              marginBottom: '8px',
+              letterSpacing: '0.05em'
             }}>
-              <MessageSquare style={{ width: '32px', height: '32px', color: '#6b7280', margin: '0 auto 12px' }} />
-              <p style={{ fontSize: '13px', color: '#94a3b8', margin: 0 }}>
-                No conversations yet
-              </p>
-            </div>
-          ) : (
-            messages.slice(-3).map((msg, idx) => (
-              <motion.div
-                key={msg.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                style={{
-                  padding: '12px',
-                  borderRadius: '10px',
-                  background: 'rgba(59, 130, 246, 0.05)',
-                  marginBottom: '8px',
-                  cursor: 'pointer',
-                  border: '1px solid rgba(59, 130, 246, 0.1)',
-                  transition: 'all 0.2s ease'
-                }}
-              >
-                <p style={{
-                  fontSize: '13px',
-                  color: '#f8fafc',
-                  margin: 0,
-                  overflow: 'hidden',
+              Recent
+            </h3>
+            
+            {messages.length === 0 ? (
+              <div style={{
+                padding: '16px',
+                background: 'rgba(99, 102, 241, 0.03)',
+                borderRadius: '8px',
+                textAlign: 'center',
+                border: '1px dashed rgba(99, 102, 241, 0.15)'
+              }}>
+                <MessageSquare style={{ width: '24px', height: '24px', color: '#64748b', margin: '0 auto 8px' }} />
+                <p style={{ fontSize: '12px', color: '#64748b', margin: 0 }}>
+                  No conversations yet
+                </p>
+              </div>
+            ) : (
+              messages.slice(-3).map((msg, idx) => (
+                <motion.div
+                  key={msg.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  style={{
+                    padding: '10px 12px',
+                    borderRadius: '8px',
+                    background: 'rgba(99, 102, 241, 0.03)',
+                    marginBottom: '6px',
+                    cursor: 'pointer',
+                    border: '1px solid rgba(99, 102, 241, 0.08)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <p style={{
+                    fontSize: '12px',
+                    color: '#e2e8f0',
+                    margin: 0,
+                    overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap'
                 }}>
@@ -453,81 +461,58 @@ export default function App() {
             ))
           )}
         </div>
+        </div>
 
-        {/* System Status */}
-        <div style={{ padding: '16px', borderTop: '1px solid rgba(59, 130, 246, 0.1)' }}>
-          <h3 style={{
-            fontSize: '11px',
-            fontWeight: '600',
-            color: '#6b7280',
-            textTransform: 'uppercase',
-            marginBottom: '12px',
-            letterSpacing: '0.05em'
-          }}>
-            System Status
-          </h3>
-          
+        {/* System Status - Compact */}
+        <div style={{ padding: '12px', borderTop: '1px solid rgba(99, 102, 241, 0.08)' }}>
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '8px'
+            display: 'flex',
+            gap: '8px',
+            flexWrap: 'wrap'
           }}>
             <div style={{
-              padding: '10px',
-              background: 'rgba(16, 185, 129, 0.1)',
-              borderRadius: '8px',
-              border: '1px solid rgba(16, 185, 129, 0.2)'
+              padding: '6px 10px',
+              background: 'rgba(16, 185, 129, 0.08)',
+              borderRadius: '20px',
+              border: '1px solid rgba(16, 185, 129, 0.15)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                <div style={{
-                  width: '6px',
-                  height: '6px',
-                  background: '#10b981',
-                  borderRadius: '50%',
-                  boxShadow: '0 0 8px rgba(16, 185, 129, 0.5)'
-                }} />
-                <span style={{ fontSize: '10px', color: '#94a3b8', fontWeight: '500' }}>AI</span>
-              </div>
-              <span style={{ fontSize: '11px', color: '#10b981', fontWeight: '600' }}>Online</span>
+              <div style={{
+                width: '6px',
+                height: '6px',
+                background: '#10b981',
+                borderRadius: '50%',
+                boxShadow: '0 0 8px rgba(16, 185, 129, 0.5)'
+              }} />
+              <span style={{ fontSize: '11px', color: '#10b981', fontWeight: '500' }}>Online</span>
             </div>
 
             <div style={{
-              padding: '10px',
-              background: 'rgba(59, 130, 246, 0.1)',
-              borderRadius: '8px',
-              border: '1px solid rgba(59, 130, 246, 0.2)'
+              padding: '6px 10px',
+              background: 'rgba(99, 102, 241, 0.08)',
+              borderRadius: '20px',
+              border: '1px solid rgba(99, 102, 241, 0.15)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                <Brain style={{ width: '10px', height: '10px', color: '#3b82f6' }} />
-                <span style={{ fontSize: '10px', color: '#94a3b8', fontWeight: '500' }}>Memory</span>
-              </div>
-              <span style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600' }}>Active</span>
+              <Brain style={{ width: '12px', height: '12px', color: '#6366F1' }} />
+              <span style={{ fontSize: '11px', color: '#6366F1', fontWeight: '500' }}>Memory</span>
             </div>
 
             <div style={{
-              padding: '10px',
-              background: 'rgba(139, 92, 246, 0.1)',
-              borderRadius: '8px',
-              border: '1px solid rgba(139, 92, 246, 0.2)'
+              padding: '6px 10px',
+              background: 'rgba(139, 92, 246, 0.08)',
+              borderRadius: '20px',
+              border: '1px solid rgba(139, 92, 246, 0.15)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                <Cpu style={{ width: '10px', height: '10px', color: '#8b5cf6' }} />
-                <span style={{ fontSize: '10px', color: '#94a3b8', fontWeight: '500' }}>Model</span>
-              </div>
-              <span style={{ fontSize: '11px', color: '#8b5cf6', fontWeight: '600' }}>GPT-4</span>
-            </div>
-
-            <div style={{
-              padding: '10px',
-              background: 'rgba(6, 182, 212, 0.1)',
-              borderRadius: '8px',
-              border: '1px solid rgba(6, 182, 212, 0.2)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                <Zap style={{ width: '10px', height: '10px', color: '#06b6d4' }} />
-                <span style={{ fontSize: '10px', color: '#94a3b8', fontWeight: '500' }}>Speed</span>
-              </div>
-              <span style={{ fontSize: '11px', color: '#06b6d4', fontWeight: '600' }}>&lt;1s</span>
+              <Cpu style={{ width: '12px', height: '12px', color: '#8B5CF6' }} />
+              <span style={{ fontSize: '11px', color: '#8B5CF6', fontWeight: '500' }}>Groq</span>
             </div>
           </div>
 
@@ -535,34 +520,34 @@ export default function App() {
           <motion.div
             whileHover={{ scale: 1.02 }}
             style={{
-              marginTop: '16px',
-              padding: '12px',
-              background: 'rgba(59, 130, 246, 0.05)',
-              borderRadius: '10px',
+              marginTop: '12px',
+              padding: '10px 12px',
+              background: 'rgba(99, 102, 241, 0.05)',
+              borderRadius: '8px',
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
+              gap: '10px',
               cursor: 'pointer',
-              border: '1px solid rgba(59, 130, 246, 0.1)',
+              border: '1px solid rgba(99, 102, 241, 0.08)',
               transition: 'all 0.2s ease'
             }}
           >
             <div style={{
-              width: '36px',
-              height: '36px',
-              background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-              borderRadius: '10px',
+              width: '32px',
+              height: '32px',
+              background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
+              borderRadius: '8px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              <User style={{ width: '20px', height: '20px', color: 'white' }} />
+              <User style={{ width: '18px', height: '18px', color: 'white' }} />
             </div>
             <div style={{ flex: 1 }}>
               <p style={{ fontSize: '13px', fontWeight: '600', margin: 0 }}>User</p>
-              <p style={{ fontSize: '11px', color: '#94a3b8', margin: '2px 0 0 0' }}>Pro Plan</p>
+              <p style={{ fontSize: '11px', color: '#64748b', margin: '2px 0 0 0' }}>Pro Plan</p>
             </div>
-            <ChevronRight style={{ width: '16px', height: '16px', color: '#6b7280' }} />
+            <ChevronRight style={{ width: '14px', height: '14px', color: '#64748b' }} />
           </motion.div>
         </div>
       </motion.aside>
@@ -570,7 +555,7 @@ export default function App() {
       {/* Main Content */}
       <div style={{
         flex: 1,
-        marginLeft: sidebarOpen ? '320px' : '0',
+        marginLeft: sidebarOpen ? '280px' : '0',
         display: 'flex',
         flexDirection: 'column',
         transition: 'margin-left 0.3s ease'
@@ -580,9 +565,9 @@ export default function App() {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           style={{
-            padding: '16px 24px',
-            borderBottom: '1px solid rgba(59, 130, 246, 0.1)',
-            background: 'rgba(15, 23, 42, 0.5)',
+            padding: '16px 32px',
+            borderBottom: '1px solid rgba(99, 102, 241, 0.08)',
+            background: 'rgba(15, 23, 42, 0.3)',
             backdropFilter: 'blur(20px)',
             position: 'sticky',
             top: 0,
@@ -599,8 +584,8 @@ export default function App() {
               whileTap={{ scale: 0.95 }}
               onClick={() => setSidebarOpen(!sidebarOpen)}
               style={{
-                background: 'rgba(59, 130, 246, 0.1)',
-                border: '1px solid rgba(59, 130, 246, 0.2)',
+                background: 'rgba(99, 102, 241, 0.08)',
+                border: '1px solid rgba(99, 102, 241, 0.15)',
                 borderRadius: '10px',
                 padding: '10px',
                 color: '#f8fafc',
@@ -613,40 +598,40 @@ export default function App() {
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '16px'
+              gap: '12px'
             }}>
               <div style={{
-                background: 'rgba(16, 185, 129, 0.1)',
-                borderRadius: '8px',
-                padding: '8px 16px',
+                background: 'rgba(16, 185, 129, 0.08)',
+                borderRadius: '20px',
+                padding: '6px 14px',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px',
-                border: '1px solid rgba(16, 185, 129, 0.2)'
+                border: '1px solid rgba(16, 185, 129, 0.15)'
               }}>
                 <div style={{
-                  width: '8px',
-                  height: '8px',
+                  width: '6px',
+                  height: '6px',
                   background: '#10b981',
                   borderRadius: '50%',
-                  boxShadow: '0 0 10px rgba(16, 185, 129, 0.5)'
+                  boxShadow: '0 0 8px rgba(16, 185, 129, 0.5)'
                 }} />
-                <span style={{ fontSize: '13px', color: '#f8fafc', fontWeight: '500' }}>Online</span>
+                <span style={{ fontSize: '12px', color: '#10b981', fontWeight: '500' }}>Online</span>
               </div>
 
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 style={{
-                  background: 'rgba(59, 130, 246, 0.1)',
-                  border: '1px solid rgba(59, 130, 246, 0.2)',
+                  background: 'rgba(99, 102, 241, 0.08)',
+                  border: '1px solid rgba(99, 102, 241, 0.15)',
                   borderRadius: '10px',
                   padding: '10px',
                   color: '#f8fafc',
                   cursor: 'pointer'
                 }}
               >
-                <Settings style={{ width: '20px', height: '20px' }} />
+                <Settings style={{ width: '18px', height: '18px' }} />
               </motion.button>
             </div>
           </div>
@@ -660,7 +645,7 @@ export default function App() {
               <div style={{
                 flex: 1,
                 overflowY: 'auto',
-                padding: '24px'
+                padding: '32px'
               }}>
                 {messages.length === 0 ? (
                   <motion.div
@@ -668,87 +653,107 @@ export default function App() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     style={{
-                      maxWidth: '800px',
+                      maxWidth: '900px',
                       margin: '0 auto',
                       textAlign: 'center',
-                      padding: '60px 20px'
+                      padding: '80px 20px'
                     }}
                   >
                     <motion.div
                       animate={{
-                        scale: [1, 1.05, 1],
-                        rotate: [0, 5, -5, 0]
+                        scale: [1, 1.02, 1],
+                        rotate: [0, 3, -3, 0]
                       }}
                       transition={{
-                        duration: 4,
+                        duration: 6,
                         repeat: Infinity,
                         ease: 'easeInOut'
                       }}
                       style={{
-                        width: '80px',
-                        height: '80px',
-                        background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%)',
-                        borderRadius: '24px',
+                        width: '100px',
+                        height: '100px',
+                        background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #06B6D4 100%)',
+                        borderRadius: '32px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        margin: '0 auto 32px',
-                        boxShadow: '0 0 40px rgba(59, 130, 246, 0.4)'
+                        margin: '0 auto 40px',
+                        boxShadow: '0 0 60px rgba(99, 102, 241, 0.5), 0 0 100px rgba(139, 92, 246, 0.3)'
                       }}
                     >
-                      <Sparkles style={{ width: '40px', height: '40px', color: 'white' }} />
+                      <Sparkles style={{ width: '48px', height: '48px', color: 'white' }} />
                     </motion.div>
 
-                    <h1 style={{
-                      fontSize: '48px',
-                      fontWeight: '700',
-                      background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                      margin: '0 0 16px 0'
-                    }}>
+                    <motion.h1
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      style={{
+                        fontSize: '56px',
+                        fontWeight: '800',
+                        background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #06B6D4 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                        margin: '0 0 20px 0',
+                        letterSpacing: '-0.03em'
+                      }}
+                    >
                       Welcome to CortexFlow
-                    </h1>
-                    <p style={{ fontSize: '18px', color: '#94a3b8', marginBottom: '48px' }}>
-                      Your intelligent AI assistant powered by advanced language models
-                    </p>
+                    </motion.h1>
+                    <motion.p
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      style={{ fontSize: '20px', color: '#64748b', marginBottom: '60px', fontWeight: '400' }}
+                    >
+                      Your intelligent AI workspace powered by advanced language models
+                    </motion.p>
 
-                    <div style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-                      gap: '16px',
-                      maxWidth: '800px',
-                      margin: '0 auto'
-                    }}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                        gap: '20px',
+                        maxWidth: '900px',
+                        margin: '0 auto'
+                      }}
+                    >
                       {[
-                        { icon: FileText, title: 'Upload Documents', desc: 'Build your knowledge base' },
-                        { icon: MessageSquare, title: 'Ask Questions', desc: 'Get detailed answers' },
-                        { icon: Brain, title: 'Memory Context', desc: 'Remembers conversations' },
-                        { icon: Zap, title: 'Real-time Updates', desc: 'Live task execution' }
+                        { icon: FileText, title: 'Upload Documents', desc: 'Build your knowledge base', color: '#6366F1' },
+                        { icon: MessageSquare, title: 'Ask Questions', desc: 'Get detailed answers', color: '#8B5CF6' },
+                        { icon: Brain, title: 'Memory Context', desc: 'Remembers conversations', color: '#06B6D4' },
+                        { icon: Zap, title: 'Real-time Updates', desc: 'Live task execution', color: '#10B981' }
                       ].map((item, idx) => (
                         <motion.div
                           key={idx}
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: idx * 0.1 }}
-                          whileHover={{ scale: 1.05, y: -5 }}
+                          transition={{ delay: 0.5 + idx * 0.1 }}
+                          whileHover={{ 
+                            scale: 1.05, 
+                            y: -8,
+                            boxShadow: `0 20px 40px rgba(${item.color === '#6366F1' ? '99, 102, 241' : item.color === '#8B5CF6' ? '139, 92, 246' : item.color === '#06B6D4' ? '6, 182, 212' : '16, 185, 129'}, 0.3)`
+                          }}
                           style={{
-                            padding: '24px',
-                            background: 'rgba(59, 130, 246, 0.05)',
+                            padding: '28px',
+                            background: `rgba(${item.color === '#6366F1' ? '99, 102, 241' : item.color === '#8B5CF6' ? '139, 92, 246' : item.color === '#06B6D4' ? '6, 182, 212' : '16, 185, 129'}, 0.06)`,
                             backdropFilter: 'blur(20px)',
-                            border: '1px solid rgba(59, 130, 246, 0.1)',
-                            borderRadius: '16px',
+                            border: `1px solid rgba(${item.color === '#6366F1' ? '99, 102, 241' : item.color === '#8B5CF6' ? '139, 92, 246' : item.color === '#06B6D4' ? '6, 182, 212' : '16, 185, 129'}, 0.15)`,
+                            borderRadius: '20px',
                             cursor: 'pointer',
-                            transition: 'all 0.3s ease'
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                           }}
                         >
-                          <item.icon style={{ width: '32px', height: '32px', color: '#3b82f6', marginBottom: '12px' }} />
-                          <h3 style={{ fontSize: '16px', fontWeight: '600', margin: '0 0 8px 0' }}>{item.title}</h3>
-                          <p style={{ fontSize: '13px', color: '#94a3b8', margin: 0 }}>{item.desc}</p>
+                          <item.icon style={{ width: '36px', height: '36px', color: item.color, marginBottom: '16px' }} />
+                          <h3 style={{ fontSize: '18px', fontWeight: '700', margin: '0 0 10px 0', color: '#f8fafc' }}>{item.title}</h3>
+                          <p style={{ fontSize: '14px', color: '#64748b', margin: 0, lineHeight: '1.5' }}>{item.desc}</p>
                         </motion.div>
                       ))}
-                    </div>
+                    </motion.div>
                   </motion.div>
                 ) : (
                   <div style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -862,9 +867,11 @@ export default function App() {
                                 <p style={{ fontSize: '15px', lineHeight: '1.6', margin: 0, whiteSpace: 'pre-wrap' }}>
                                   {(() => {
                                     try {
-                                      // Try to parse as JSON (for retrieve results with confidence)
+                                      // Try to parse as JSON (for tool results)
                                       const parsed = JSON.parse(msg.content);
-                                      if (Array.isArray(parsed)) {
+                                      
+                                      // Handle retrieve results with confidence
+                                      if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].text && parsed[0].confidence) {
                                         return parsed.map((item, idx) => (
                                           <div key={idx} style={{ marginBottom: idx < parsed.length - 1 ? '12px' : '0' }}>
                                             <div style={{ fontSize: '15px', lineHeight: '1.6', margin: 0, whiteSpace: 'pre-wrap' }}>
@@ -902,6 +909,209 @@ export default function App() {
                                           </div>
                                         ));
                                       }
+                                      
+                                      // Handle search results
+                                      if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].match_position !== undefined) {
+                                        return (
+                                          <div>
+                                            <p style={{ fontSize: '13px', fontWeight: '600', color: '#8b5cf6', marginBottom: '8px' }}>
+                                              🔍 Found {parsed.length} matches
+                                            </p>
+                                            {parsed.map((item, idx) => (
+                                              <div key={idx} style={{ marginBottom: '12px', padding: '12px', background: 'rgba(139, 92, 246, 0.1)', borderRadius: '8px' }}>
+                                                <div style={{ fontSize: '14px', marginBottom: '6px' }}>{item.text}</div>
+                                                <div style={{ fontSize: '11px', color: '#8b5cf6' }}>
+                                                  <FileText style={{ width: '12px', height: '12px', display: 'inline', marginRight: '4px' }} />
+                                                  {item.source.filename} (Page {item.source.page})
+                                                </div>
+                                              </div>
+                                            ))}
+                                          </div>
+                                        );
+                                      }
+                                      
+                                      // Handle extract results
+                                      if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].entities !== undefined) {
+                                        return (
+                                          <div>
+                                            <p style={{ fontSize: '13px', fontWeight: '600', color: '#f59e0b', marginBottom: '8px' }}>
+                                              📋 Extracted {parsed.length} results
+                                            </p>
+                                            {parsed.map((item, idx) => (
+                                              <div key={idx} style={{ marginBottom: '12px', padding: '12px', background: 'rgba(245, 158, 11, 0.1)', borderRadius: '8px' }}>
+                                                <div style={{ fontSize: '13px', color: '#f59e0b', marginBottom: '4px' }}>
+                                                  {item.source.filename} (Page {item.source.page})
+                                                </div>
+                                                <div style={{ fontSize: '14px' }}>
+                                                  {item.entities.join(', ')}
+                                                </div>
+                                              </div>
+                                            ))}
+                                          </div>
+                                        );
+                                      }
+                                      
+                                      // Handle compare results
+                                      if (typeof parsed === 'object' && !Array.isArray(parsed) && Object.keys(parsed).length > 0) {
+                                        return (
+                                          <div>
+                                            <p style={{ fontSize: '13px', fontWeight: '600', color: '#06b6d4', marginBottom: '12px' }}>
+                                              📊 Document Comparison
+                                            </p>
+                                            {parsed._summary && (
+                                              <div style={{ marginBottom: '12px', padding: '12px', background: 'rgba(6, 182, 212, 0.15)', borderRadius: '8px' }}>
+                                                <div style={{ fontSize: '13px', marginBottom: '4px' }}>
+                                                  <strong>Total Documents:</strong> {parsed._summary.total_documents}
+                                                </div>
+                                                <div style={{ fontSize: '13px', marginBottom: '4px' }}>
+                                                  <strong>Common Skills:</strong> {parsed._summary.common_skills.length > 0 ? parsed._summary.common_skills.join(', ') : 'None found'}
+                                                </div>
+                                                <div style={{ fontSize: '13px' }}>
+                                                  <strong>Skill Overlap:</strong> {parsed._summary.skill_overlap ? 'Yes' : 'No'}
+                                                </div>
+                                              </div>
+                                            )}
+                                            {Object.entries(parsed).filter(([key]) => !key.startsWith('_')).map(([filename, data], idx) => (
+                                              <div key={idx} style={{ marginBottom: '12px', padding: '12px', background: 'rgba(6, 182, 212, 0.1)', borderRadius: '8px' }}>
+                                                <div style={{ fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>{filename}</div>
+                                                <div style={{ fontSize: '13px', marginBottom: '4px' }}>
+                                                  <strong>Word Count:</strong> {data.word_count}
+                                                </div>
+                                                {data.skills && data.skills.length > 0 && (
+                                                  <div style={{ marginBottom: '8px' }}>
+                                                    <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '4px' }}>Skills:</div>
+                                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                                                      {data.skills.map((skill, sidx) => (
+                                                        <span key={sidx} style={{
+                                                          padding: '4px 10px',
+                                                          background: 'rgba(6, 182, 212, 0.2)',
+                                                          borderRadius: '20px',
+                                                          fontSize: '11px',
+                                                          color: '#06b6d4'
+                                                        }}>
+                                                          {skill}
+                                                        </span>
+                                                      ))}
+                                                    </div>
+                                                  </div>
+                                                )}
+                                                {data.key_themes && (
+                                                  <div style={{ fontSize: '13px' }}>
+                                                    <strong>Key Themes:</strong> {data.key_themes.join(', ')}
+                                                  </div>
+                                                )}
+                                              </div>
+                                            ))}
+                                          </div>
+                                        );
+                                      }
+                                      
+                                      // Handle analyze results
+                                      if (typeof parsed === 'object' && parsed.sentiment !== undefined) {
+                                        return (
+                                          <div style={{ padding: '16px', background: 'rgba(99, 102, 241, 0.1)', borderRadius: '12px' }}>
+                                            <p style={{ fontSize: '13px', fontWeight: '600', color: '#6366f1', marginBottom: '12px' }}>
+                                              🎭 Sentiment Analysis
+                                            </p>
+                                            <div style={{ fontSize: '14px', marginBottom: '8px' }}>
+                                              <strong>Sentiment:</strong> <span style={{ 
+                                                color: parsed.sentiment === 'positive' ? '#10b981' : parsed.sentiment === 'negative' ? '#ef4444' : '#f59e0b',
+                                                fontWeight: '600'
+                                              }}>{parsed.sentiment.toUpperCase()}</span>
+                                            </div>
+                                            <div style={{ fontSize: '13px', marginBottom: '4px' }}>
+                                              Positive words: {parsed.positive_words}
+                                            </div>
+                                            <div style={{ fontSize: '13px', marginBottom: '4px' }}>
+                                              Negative words: {parsed.negative_words}
+                                            </div>
+                                            <div style={{ fontSize: '13px' }}>
+                                              Total words: {parsed.total_words}
+                                            </div>
+                                          </div>
+                                        );
+                                      }
+                                      
+                                      // Handle theme analysis
+                                      if (typeof parsed === 'object' && parsed.key_themes !== undefined) {
+                                        return (
+                                          <div style={{ padding: '16px', background: 'rgba(99, 102, 241, 0.1)', borderRadius: '12px' }}>
+                                            <p style={{ fontSize: '13px', fontWeight: '600', color: '#6366f1', marginBottom: '12px' }}>
+                                              📊 Analysis Results
+                                            </p>
+                                            {parsed.total_words && (
+                                              <div style={{ fontSize: '13px', marginBottom: '4px' }}>
+                                                <strong>Total words:</strong> {parsed.total_words}
+                                              </div>
+                                            )}
+                                            {parsed.unique_words && (
+                                              <div style={{ fontSize: '13px', marginBottom: '4px' }}>
+                                                <strong>Unique words:</strong> {parsed.unique_words}
+                                              </div>
+                                            )}
+                                            {parsed.document_count && (
+                                              <div style={{ fontSize: '13px', marginBottom: '8px' }}>
+                                                <strong>Document count:</strong> {parsed.document_count}
+                                              </div>
+                                            )}
+                                            {parsed.total_unique_words && (
+                                              <div style={{ fontSize: '13px', marginBottom: '8px' }}>
+                                                <strong>Total unique words:</strong> {parsed.total_unique_words}
+                                              </div>
+                                            )}
+                                            <div style={{ fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>Key Themes:</div>
+                                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                                              {parsed.key_themes.map((theme, idx) => (
+                                                <span key={idx} style={{
+                                                  padding: '4px 10px',
+                                                  background: 'rgba(99, 102, 241, 0.2)',
+                                                  borderRadius: '20px',
+                                                  fontSize: '12px',
+                                                  color: '#6366f1'
+                                                }}>
+                                                  {typeof theme === 'object' ? theme.word : theme}
+                                                </span>
+                                              ))}
+                                            </div>
+                                          </div>
+                                        );
+                                      }
+                                      
+                                      // Handle list results
+                                      if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].total_pages !== undefined) {
+                                        return (
+                                          <div>
+                                            <p style={{ fontSize: '13px', fontWeight: '600', color: '#06b6d4', marginBottom: '12px' }}>
+                                              📁 Uploaded Documents ({parsed.length})
+                                            </p>
+                                            {parsed.map((doc, idx) => (
+                                              <div key={idx} style={{ marginBottom: '8px', padding: '12px', background: 'rgba(6, 182, 212, 0.1)', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <div>
+                                                  <div style={{ fontSize: '14px', fontWeight: '600' }}>{doc.filename}</div>
+                                                  <div style={{ fontSize: '12px', color: '#94a3b8' }}>
+                                                    Pages: {doc.total_pages} | Chunks: {doc.total_chunks}
+                                                  </div>
+                                                </div>
+                                                <div style={{ fontSize: '11px', padding: '4px 8px', background: 'rgba(6, 182, 212, 0.2)', borderRadius: '4px' }}>
+                                                  {doc.page_range}
+                                                </div>
+                                              </div>
+                                            ))}
+                                          </div>
+                                        );
+                                      }
+                                      
+                                      // Handle general object (like compare with mixed structure)
+                                      if (typeof parsed === 'object' && !Array.isArray(parsed)) {
+                                        return (
+                                          <div style={{ padding: '12px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '8px' }}>
+                                            <pre style={{ margin: 0, fontSize: '13px', whiteSpace: 'pre-wrap' }}>
+                                              {JSON.stringify(parsed, null, 2)}
+                                            </pre>
+                                          </div>
+                                        );
+                                      }
+                                      
                                     } catch (e) {
                                       // Not JSON, treat as regular text with citations
                                       // Simple markdown parsing
@@ -1101,27 +1311,72 @@ export default function App() {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 style={{
-                  padding: '24px',
-                  borderTop: '1px solid rgba(59, 130, 246, 0.1)',
-                  background: 'rgba(15, 23, 42, 0.5)',
-                  backdropFilter: 'blur(20px)'
+                  padding: '32px',
+                  borderTop: '1px solid rgba(99, 102, 241, 0.08)',
+                  background: 'rgba(15, 23, 42, 0.3)',
+                  backdropFilter: 'blur(24px)'
                 }}
               >
                 <div style={{
-                  maxWidth: '800px',
+                  maxWidth: '900px',
                   margin: '0 auto',
                   position: 'relative'
                 }}>
+                  {/* Prompt Suggestions */}
+                  {messages.length === 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      style={{
+                        display: 'flex',
+                        gap: '12px',
+                        marginBottom: '16px',
+                        flexWrap: 'wrap'
+                      }}
+                    >
+                      {[
+                        'Summarize a document',
+                        'Generate roadmap',
+                        'Explain code',
+                        'Analyze data'
+                      ].map((suggestion, idx) => (
+                        <motion.button
+                          key={idx}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: idx * 0.1 }}
+                          whileHover={{ scale: 1.05, y: -2 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => setInput(suggestion)}
+                          style={{
+                            background: 'rgba(99, 102, 241, 0.06)',
+                            border: '1px solid rgba(99, 102, 241, 0.12)',
+                            borderRadius: '20px',
+                            padding: '8px 16px',
+                            color: '#64748b',
+                            cursor: 'pointer',
+                            fontSize: '13px',
+                            fontWeight: '500',
+                            transition: 'all 0.2s ease'
+                          }}
+                        >
+                          {suggestion}
+                        </motion.button>
+                      ))}
+                    </motion.div>
+                  )}
+
                   <div style={{
                     display: 'flex',
                     gap: '12px',
                     alignItems: 'flex-end',
-                    background: 'rgba(59, 130, 246, 0.05)',
-                    backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(59, 130, 246, 0.1)',
-                    borderRadius: '16px',
-                    padding: '12px',
-                    transition: 'all 0.3s ease'
+                    background: 'rgba(99, 102, 241, 0.04)',
+                    backdropFilter: 'blur(24px)',
+                    border: '1px solid rgba(99, 102, 241, 0.12)',
+                    borderRadius: '20px',
+                    padding: '16px',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2)'
                   }}>
                     <motion.button
                       whileHover={{ scale: 1.1 }}
@@ -1130,15 +1385,16 @@ export default function App() {
                         setActiveView('upload');
                       }}
                       style={{
-                        background: 'rgba(59, 130, 246, 0.1)',
-                        border: 'none',
-                        borderRadius: '10px',
-                        padding: '10px',
-                        color: '#f8fafc',
-                        cursor: 'pointer'
+                        background: 'rgba(99, 102, 241, 0.08)',
+                        border: '1px solid rgba(99, 102, 241, 0.15)',
+                        borderRadius: '12px',
+                        padding: '12px',
+                        color: '#6366F1',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
                       }}
                     >
-                      <Paperclip style={{ width: '20px', height: '20px' }} />
+                      <Paperclip style={{ width: '18px', height: '18px' }} />
                     </motion.button>
 
                     <textarea
@@ -1161,8 +1417,8 @@ export default function App() {
                         outline: 'none',
                         fontFamily: 'inherit',
                         lineHeight: '1.6',
-                        minHeight: '44px',
-                        maxHeight: '120px'
+                        minHeight: '52px',
+                        maxHeight: '150px'
                       }}
                       rows={1}
                     />
@@ -1173,17 +1429,17 @@ export default function App() {
                       onClick={handleSummarize}
                       disabled={summarizing}
                       style={{
-                        background: 'rgba(16, 185, 129, 0.1)',
-                        border: '1px solid rgba(16, 185, 129, 0.2)',
+                        background: 'rgba(16, 185, 129, 0.08)',
+                        border: '1px solid rgba(16, 185, 129, 0.15)',
                         borderRadius: '12px',
                         padding: '12px',
-                        color: '#10b981',
+                        color: '#10B981',
                         cursor: 'pointer',
                         marginRight: '8px',
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.2s ease'
                       }}
                     >
-                      <Sparkles style={{ width: '20px', height: '20px' }} />
+                      <Sparkles style={{ width: '18px', height: '18px' }} />
                     </motion.button>
 
                     <motion.button
@@ -1193,20 +1449,18 @@ export default function App() {
                       disabled={!input.trim()}
                       style={{
                         background: input.trim()
-                          ? 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)'
-                          : 'rgba(59, 130, 246, 0.1)',
-                        border: input.trim()
-                          ? '1px solid rgba(59, 130, 246, 0.3)'
-                          : '1px solid rgba(59, 130, 246, 0.1)',
+                          ? 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)'
+                          : 'rgba(99, 102, 241, 0.08)',
+                        border: input.trim() ? 'none' : '1px solid rgba(99, 102, 241, 0.15)',
                         borderRadius: '12px',
                         padding: '12px',
-                        color: input.trim() ? 'white' : '#94a3b8',
+                        color: input.trim() ? 'white' : '#64748b',
                         cursor: input.trim() ? 'pointer' : 'not-allowed',
-                        boxShadow: input.trim() ? '0 0 20px rgba(59, 130, 246, 0.4)' : 'none',
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.3s ease',
+                        boxShadow: input.trim() ? '0 4px 20px rgba(99, 102, 241, 0.4)' : 'none'
                       }}
                     >
-                      <Send style={{ width: '20px', height: '20px' }} />
+                      <Send style={{ width: '18px', height: '18px' }} />
                     </motion.button>
                   </div>
 
